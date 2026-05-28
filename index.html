@@ -3,190 +3,580 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>FOX CHEATS — Лаунчер клиентов Minecraft</title>
-<meta name="description" content="FOX CHEATS — лаунчер с клиентами для Minecraft">
+<title>FOX CHEATS — Premium Minecraft Clients</title>
+<meta name="description" content="FOX CHEATS — премиальный лаунчер с клиентами для Minecraft">
 <link rel="icon" type="image/png" href="fox-logo.png">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-TLHKHKNS');</script>
 <style>
-:root{--bg:#0a0a0f;--card:#12121a;--orange:#f97316;--red:#dc2626;--text:#f8fafc;--text-dim:#94a3b8;--border:rgba(220,38,38,0.2)}
+:root{--bg:#050508;--card:#0f0f16;--card-hover:#151520;--orange:#ff6b35;--orange-light:#ff8c5a;--red:#e63946;--red-bright:#ff4d5a;--text:#ffffff;--text-dim:#a0a0b0;--text-muted:#6c6c7e;--border:rgba(255,107,53,0.15);--glow:rgba(255,107,53,0.4);--success:#00d9a3;--success-glow:rgba(0,217,163,0.4)}
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;overflow-x:hidden}
-html.light{--bg:#f8fafc;--card:#fff;--text:#0f172a;--text-dim:#475569}
-nav{position:fixed;top:0;width:100%;padding:20px 40px;background:rgba(10,10,15,0.95);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;z-index:1000}
-.logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--orange);font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:700}
-.logo-img{height:40px}
-.nav-links{display:flex;gap:30px;list-style:none;align-items:center}
-.nav-links a{color:var(--text-dim);text-decoration:none;transition:color 0.3s}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;overflow-x:hidden;min-height:100vh}
+html.light{--bg:#fafafa;--card:#ffffff;--card-hover:#f5f5f5;--text:#0a0a0f;--text-dim:#4a4a5a;--text-muted:#8a8a9a;--border:rgba(0,0,0,0.08)}
+
+.bg-animation{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.bg-animation::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle at 20% 30%,rgba(255,107,53,0.15) 0%,transparent 40%),radial-gradient(circle at 80% 70%,rgba(230,57,70,0.12) 0%,transparent 40%),radial-gradient(circle at 50% 50%,rgba(255,107,53,0.08) 0%,transparent 50%);animation:float 20s ease-in-out infinite}
+.bg-animation::after{content:'';position:absolute;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle at 60% 40%,rgba(230,57,70,0.1) 0%,transparent 35%),radial-gradient(circle at 30% 80%,rgba(255,107,53,0.08) 0%,transparent 45%);animation:float 25s ease-in-out infinite reverse}
+@keyframes float{0%,100%{transform:translate(0,0) rotate(0deg)}33%{transform:translate(30px,-30px) rotate(120deg)}66%{transform:translate(-20px,20px) rotate(240deg)}}
+
+.breadcrumb{position:fixed;top:80px;left:50px;z-index:999;display:flex;gap:10px;align-items:center;font-size:13px;color:var(--text-muted);opacity:0;transform:translateY(-10px);transition:all 0.3s;pointer-events:none}
+.breadcrumb.visible{opacity:1;transform:translateY(0);pointer-events:all}
+.breadcrumb a{color:var(--orange);text-decoration:none;transition:color 0.3s}
+.breadcrumb a:hover{color:var(--orange-light)}
+.breadcrumb span{opacity:0.6}
+
+nav{position:fixed;top:0;width:100%;padding:20px 50px;background:rgba(5,5,8,0.8);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;z-index:1000;transition:all 0.3s}
+nav.scrolled{padding:15px 50px;background:rgba(5,5,8,0.95);box-shadow:0 10px 40px rgba(0,0,0,0.3)}
+.logo{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--orange);font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:700;transition:all 0.3s}
+.logo:hover{transform:translateY(-2px);filter:drop-shadow(0 0 20px var(--glow))}
+.logo-img{height:42px;transition:transform 0.3s}
+.logo:hover .logo-img{transform:rotate(5deg) scale(1.1)}
+.nav-links{display:flex;gap:35px;list-style:none;align-items:center}
+.nav-links a{color:var(--text-dim);text-decoration:none;font-weight:500;font-size:14px;transition:all 0.3s;position:relative}
 .nav-links a:hover{color:var(--orange)}
-.theme-toggle{width:50px;height:26px;background:var(--card);border-radius:13px;position:relative;cursor:pointer;border:1px solid var(--border)}
-.theme-toggle.active{background:var(--orange)}
-.theme-toggle::after{content:'';position:absolute;width:20px;height:20px;background:#fff;border-radius:50%;top:2px;left:3px;transition:transform 0.3s}
-.theme-toggle.active::after{transform:translateX(24px)}
-.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:120px 20px 80px;background:radial-gradient(circle at 10% 20%,rgba(249,115,22,0.1) 0%,transparent 60%),radial-gradient(circle at 90% 80%,rgba(220,38,38,0.15) 0%,transparent 60%)}
-.hero-badge{display:inline-block;padding:8px 16px;background:rgba(249,115,22,0.1);border:1px solid rgba(249,115,22,0.3);border-radius:20px;font-size:12px;color:var(--orange);margin-bottom:20px}
-h1{font-family:'Space Grotesk',sans-serif;font-size:56px;margin-bottom:20px;background:linear-gradient(135deg,#fff 0%,var(--orange) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.hero p{max-width:600px;margin-bottom:30px;color:var(--text-dim);font-size:16px;line-height:1.6}
-.btn{display:inline-block;padding:14px 28px;background:var(--orange);color:#fff;text-decoration:none;border-radius:8px;font-weight:600;margin:5px;transition:all 0.3s}
-.btn:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(249,115,22,0.3)}
-.btn-ghost{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1)}
-.stats{display:flex;gap:50px;margin-top:60px;flex-wrap:wrap;justify-content:center}
-.stat{text-align:center}
-.stat-num{font-family:'Space Grotesk',sans-serif;font-size:32px;font-weight:700;color:var(--orange)}
-.stat-lbl{font-size:13px;color:var(--text-dim);margin-top:5px}
-.section{max-width:1200px;margin:0 auto;padding:80px 20px}
-.sec-head{text-align:center;margin-bottom:50px}
-.sec-tag{font-size:12px;color:var(--orange);text-transform:uppercase;letter-spacing:2px;margin-bottom:10px}
-.sec-title{font-family:'Space Grotesk',sans-serif;font-size:36px;margin-bottom:10px}
-.sec-sub{color:var(--text-dim)}
-.search-box{max-width:500px;margin:0 auto 40px}
-.search-box input{width:100%;padding:15px 20px;border:1px solid var(--border);border-radius:10px;background:var(--card);color:var(--text);font-size:15px}
-.search-box input:focus{outline:none;border-color:var(--orange)}
-.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:25px}
-.card{background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;transition:all 0.3s;cursor:pointer}
-.card:hover{transform:translateY(-5px);border-color:var(--red);box-shadow:0 20px 60px rgba(220,38,38,0.15)}
-.card-image-wrap{width:100%;height:180px;background:linear-gradient(135deg,var(--card),#1a1a25);display:flex;align-items:center;justify-content:center;overflow:hidden}
-.card-img{width:100%;height:100%;object-fit:cover}
-.card-content{padding:25px}.card h3{color:var(--orange);margin-bottom:5px;font-size:22px}
-.version{color:var(--text-dim);font-size:12px;margin-bottom:15px}
-.card p{color:var(--text-dim);font-size:14px;line-height:1.5;margin-bottom:15px;min-height:50px}
-.tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px}
-.tag{padding:4px 10px;background:#1a1a25;border-radius:6px;font-size:11px;color:var(--text-dim);border:1px solid rgba(255,255,255,0.08)}
-.card-footer{display:flex;justify-content:space-between;align-items:center;padding-top:15px;border-top:1px solid var(--border)}
-.status{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;background:rgba(16,185,129,0.1);color:#10b981;border-radius:6px;font-size:10px;font-weight:700}
-.dot{width:6px;height:6px;background:#10b981;border-radius:50%;animation:pulse 2s infinite}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.5}}
-.more-btn{color:var(--orange);font-weight:600;font-size:13px}
-.faq-section{background:var(--card);margin-top:80px}
-.faq-container{max-width:800px;margin:0 auto}
-.faq-item{background:var(--bg);border:1px solid var(--border);border-radius:12px;margin-bottom:15px;overflow:hidden}
-.faq-question{padding:20px;cursor:pointer;display:flex;justify-content:space-between;align-items:center}
-.faq-question h3{font-size:15px;color:var(--text)}
-.faq-icon{width:20px;height:20px;transition:transform 0.3s;color:var(--orange)}
+.nav-links a::after{content:'';position:absolute;bottom:-5px;left:0;width:0;height:2px;background:var(--orange);transition:width 0.3s}
+.nav-links a:hover::after{width:100%}
+.theme-toggle{width:54px;height:28px;background:var(--card);border-radius:14px;position:relative;cursor:pointer;border:1px solid var(--border);transition:all 0.3s}
+.theme-toggle.active{background:var(--orange);border-color:var(--orange)}
+.theme-toggle::after{content:'';position:absolute;width:22px;height:22px;background:#fff;border-radius:50%;top:2px;left:3px;transition:transform 0.3s;box-shadow:0 2px 8px rgba(0,0,0,0.2)}
+.theme-toggle.active::after{transform:translateX(26px)}
+
+.hero{position:relative;z-index:2;min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:140px 30px 100px;background:radial-gradient(ellipse at top,rgba(255,107,53,0.15) 0%,transparent 50%),radial-gradient(ellipse at bottom right,rgba(230,57,70,0.1) 0%,transparent 50%)}
+.hero-badge{display:inline-flex;align-items:center;gap:10px;padding:10px 20px;background:rgba(255,107,53,0.1);border:1px solid rgba(255,107,53,0.3);border-radius:30px;font-size:13px;color:var(--orange);margin-bottom:30px;font-weight:600;letter-spacing:0.5px;animation:glow 2s ease-in-out infinite alternate}
+@keyframes glow{from{box-shadow:0 0 20px rgba(255,107,53,0.2)}to{box-shadow:0 0 30px rgba(255,107,53,0.4),0 0 40px rgba(255,107,53,0.2)}}
+.hero-badge svg{width:18px;height:18px}
+h1{font-family:'Space Grotesk',sans-serif;font-size:72px;font-weight:800;margin-bottom:25px;letter-spacing:-2px;line-height:1.1;background:linear-gradient(135deg,#fff 0%,var(--orange) 50%,var(--red) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:gradient 5s ease infinite;background-size:200% 200%}
+@keyframes gradient{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+.hero p{max-width:650px;margin-bottom:40px;color:var(--text-dim);font-size:18px;line-height:1.7;font-weight:400}.btn{display:inline-flex;align-items:center;gap:10px;padding:16px 32px;background:linear-gradient(135deg,var(--orange),var(--red));color:#fff;text-decoration:none;border-radius:12px;font-weight:600;font-size:15px;margin:8px;transition:all 0.3s;position:relative;overflow:hidden;border:none;cursor:pointer}
+.btn::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.3),transparent);transition:left 0.5s}
+.btn:hover::before{left:100%}
+.btn:hover{transform:translateY(-3px);box-shadow:0 15px 40px rgba(255,107,53,0.4)}
+.btn svg{width:20px;height:20px}
+.btn-ghost{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.15);backdrop-filter:blur(10px)}
+.btn-ghost:hover{background:rgba(255,255,255,0.1);border-color:var(--orange);box-shadow:0 10px 30px rgba(255,107,53,0.2)}
+.stats{display:flex;gap:70px;margin-top:80px;flex-wrap:wrap;justify-content:center}
+.stat{text-align:center;padding:25px 35px;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:16px;backdrop-filter:blur(10px);transition:all 0.3s}
+.stat:hover{transform:translateY(-5px);background:rgba(255,255,255,0.05);border-color:var(--orange);box-shadow:0 10px 30px rgba(255,107,53,0.15)}
+.stat-num{font-family:'Space Grotesk',sans-serif;font-size:40px;font-weight:800;color:var(--orange);margin-bottom:8px;text-shadow:0 0 30px var(--glow)}
+.stat-lbl{font-size:13px;color:var(--text-muted);font-weight:500;letter-spacing:0.5px;text-transform:uppercase}
+
+.filters{position:relative;z-index:2;max-width:1400px;margin:0 auto;padding:0 30px 40px;display:flex;gap:20px;flex-wrap:wrap;align-items:center;justify-content:center}
+.filter-group{display:flex;flex-direction:column;gap:8px}
+.filter-label{font-size:12px;color:var(--text-muted);font-weight:600;text-transform:uppercase;letter-spacing:0.5px}
+.filter-select{padding:12px 20px;background:var(--card);border:1px solid var(--border);border-radius:10px;color:var(--text);font-size:14px;cursor:pointer;transition:all 0.3s;min-width:180px}
+.filter-select:focus{outline:none;border-color:var(--orange);box-shadow:0 0 0 3px rgba(255,107,53,0.1)}
+.filter-select option{background:var(--card);color:var(--text)}
+.filter-clear{padding:12px 24px;background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:10px;color:var(--text-dim);font-size:14px;cursor:pointer;transition:all 0.3s}
+.filter-clear:hover{background:rgba(255,255,255,0.1);color:var(--text);border-color:var(--orange)}
+
+.section{position:relative;z-index:2;max-width:1400px;margin:0 auto;padding:100px 30px}
+.sec-head{text-align:center;margin-bottom:70px}
+.sec-tag{font-size:12px;color:var(--orange);text-transform:uppercase;letter-spacing:3px;margin-bottom:15px;font-weight:700}
+.sec-title{font-family:'Space Grotesk',sans-serif;font-size:48px;font-weight:800;margin-bottom:15px;letter-spacing:-1px}
+.sec-sub{color:var(--text-dim);font-size:17px;max-width:600px;margin:0 auto}
+
+.search-box{max-width:600px;margin:0 auto 60px;position:relative}
+.search-box input{width:100%;padding:20px 30px 20px 60px;border:1px solid var(--border);border-radius:16px;background:var(--card);color:var(--text);font-size:16px;transition:all 0.3s;backdrop-filter:blur(10px)}
+.search-box input:focus{outline:none;border-color:var(--orange);box-shadow:0 0 0 4px rgba(255,107,53,0.1),0 10px 40px rgba(0,0,0,0.2)}
+.search-icon{position:absolute;left:22px;top:50%;transform:translateY(-50%);color:var(--text-muted);transition:color 0.3s}
+.search-box input:focus+.search-icon{color:var(--orange)}
+
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:30px}
+.card{position:relative;background:var(--card);border:1px solid var(--border);border-radius:20px;overflow:hidden;transition:all 0.4s cubic-bezier(0.16,1,0.3,1);cursor:pointer;backdrop-filter:blur(10px);opacity:0;transform:translateY(30px)}
+.card.visible{opacity:1;transform:translateY(0)}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--orange),transparent);opacity:0;transition:opacity 0.3s}
+.card:hover::before{opacity:1}
+.card:hover{transform:translateY(-10px);border-color:rgba(255,107,53,0.3);box-shadow:0 30px 80px rgba(0,0,0,0.4),0 0 0 1px rgba(255,107,53,0.1),0 0 60px rgba(255,107,53,0.1)}
+.card-image-wrap{width:100%;height:200px;background:linear-gradient(135deg,var(--card),#1a1a2e);display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative}
+.card-image-wrap::after{content:'';position:absolute;inset:0;background:radial-gradient(circle at center,rgba(255,107,53,0.1) 0%,transparent 70%);opacity:0;transition:opacity 0.3s}
+.card:hover .card-image-wrap::after{opacity:1}
+.card-img{width:100%;height:100%;object-fit:cover;transition:transform 0.5s}
+.card:hover .card-img{transform:scale(1.08)}
+.card-content{padding:30px}
+.card-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:15px}
+.card h3{color:var(--orange);margin-bottom:6px;font-size:24px;font-weight:700;letter-spacing:-0.5px}
+.version{color:var(--text-muted);font-size:13px;margin-bottom:18px;font-weight:500}
+.card p{color:var(--text-dim);font-size:15px;line-height:1.6;margin-bottom:20px;min-height:55px}.tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:25px}
+.tag{padding:6px 12px;background:rgba(255,107,53,0.08);border-radius:8px;font-size:12px;color:var(--orange);border:1px solid rgba(255,107,53,0.15);font-weight:500;transition:all 0.3s}
+.tag:hover{background:rgba(255,107,53,0.15);border-color:var(--orange);transform:translateY(-2px)}
+.card-footer{display:flex;justify-content:space-between;align-items:center;padding-top:20px;border-top:1px solid var(--border)}
+.status{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;background:rgba(0,217,163,0.1);color:var(--success);border-radius:8px;font-size:11px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;border:1px solid rgba(0,217,163,0.2)}
+.status.offline{background:rgba(108,108,126,0.1);color:var(--text-muted);border-color:rgba(108,108,126,0.2)}
+.dot{width:6px;height:6px;background:var(--success);border-radius:50%;animation:pulse 2s infinite;box-shadow:0 0 10px var(--success-glow)}
+.status.offline .dot{background:var(--text-muted);box-shadow:none;animation:none}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.6;transform:scale(1.2)}}
+.rating{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text-dim)}
+.stars{display:flex;gap:2px}
+.star{color:var(--text-muted);font-size:14px}
+.star.filled{color:#ffa500}
+.downloads{font-size:12px;color:var(--text-muted)}
+.more-btn{color:var(--orange);font-weight:600;font-size:13px;display:inline-flex;align-items:center;gap:6px;transition:all 0.3s}
+.more-btn svg{width:16px;height:16px;transition:transform 0.3s}
+.card:hover .more-btn svg{transform:translateX(5px)}
+
+.security-badges{display:flex;gap:12px;margin-top:12px;flex-wrap:wrap}
+.badge{display:inline-flex;align-items:center;gap:6px;padding:5px 10px;background:rgba(0,217,163,0.08);border:1px solid rgba(0,217,163,0.15);border-radius:6px;font-size:11px;color:var(--success);font-weight:600}
+.badge svg{width:14px;height:14px}
+.badge.virustotal{background:rgba(100,181,246,0.08);border-color:rgba(100,181,246,0.2);color:#64b5f6}
+.last-updated{font-size:11px;color:var(--text-muted);margin-top:8px}
+
+.progress-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(5,5,8,0.9);backdrop-filter:blur(10px);z-index:3000;display:none;justify-content:center;align-items:center;flex-direction:column;gap:20px}
+.progress-overlay.active{display:flex}
+.progress-box{width:90%;max-width:500px;text-align:center}
+.progress-title{font-size:18px;font-weight:700;color:var(--text);margin-bottom:10px}
+.progress-bar{width:100%;height:8px;background:var(--card);border-radius:4px;overflow:hidden;margin-bottom:15px}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--orange),var(--red));width:0%;transition:width 0.3s ease}
+.progress-text{font-size:14px;color:var(--text-dim)}
+.progress-cancel{padding:12px 30px;background:rgba(255,255,255,0.1);border:none;border-radius:8px;color:var(--text);cursor:pointer;font-size:14px;transition:all 0.3s}
+.progress-cancel:hover{background:rgba(255,255,255,0.2)}
+
+.faq-section{background:var(--card);margin-top:100px;position:relative;z-index:2}
+.faq-container{max-width:900px;margin:0 auto}
+.faq-item{background:var(--bg);border:1px solid var(--border);border-radius:16px;margin-bottom:18px;overflow:hidden;transition:all 0.3s}
+.faq-item:hover{border-color:rgba(255,107,53,0.25);transform:translateX(5px)}
+.faq-question{padding:25px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;transition:all 0.3s}
+.faq-question:hover{background:rgba(255,107,53,0.03)}
+.faq-question h3{font-size:16px;color:var(--text);font-weight:600}
+.faq-icon{width:22px;height:22px;transition:transform 0.3s;color:var(--orange);flex-shrink:0}
 .faq-item.active .faq-icon{transform:rotate(180deg)}
-.faq-answer{max-height:0;overflow:hidden;transition:max-height 0.3s ease}
-.faq-item.active .faq-answer{max-height:300px}
-.faq-answer p{padding:0 20px 20px;color:var(--text-dim);line-height:1.6;font-size:14px}
-footer{text-align:center;padding:30px;color:var(--text-dim);border-top:1px solid var(--border);margin-top:80px}
-footer a{color:var(--orange);text-decoration:none}
-::-webkit-scrollbar{width:10px}
-::-webkit-scrollbar-track{background:var(--bg)}
-::-webkit-scrollbar-thumb{background:var(--red);border-radius:5px}
-.modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.85);backdrop-filter:blur(8px);z-index:2000;justify-content:center;align-items:center;padding:20px;opacity:0;transition:opacity 0.3s}
+.faq-answer{max-height:0;overflow:hidden;transition:max-height 0.4s ease}
+.faq-item.active .faq-answer{max-height:400px}
+.faq-answer p{padding:0 25px 25px;color:var(--text-dim);line-height:1.7;font-size:15px}
+.faq-answer a{color:var(--orange);text-decoration:none;border-bottom:1px solid transparent;transition:border-color 0.3s}
+.faq-answer a:hover{border-bottom-color:var(--orange)}
+
+footer{position:relative;z-index:2;text-align:center;padding:50px 30px;color:var(--text-muted);border-top:1px solid var(--border);background:var(--bg)}footer a{color:var(--orange);text-decoration:none;transition:all 0.3s;font-weight:500}
+footer a:hover{color:var(--orange-light)}
+
+.modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(5,5,8,0.95);backdrop-filter:blur(15px);z-index:2000;justify-content:center;align-items:center;padding:30px;opacity:0;transition:opacity 0.4s}
 .modal.active{display:flex;opacity:1}
-.modal-content{background:var(--card);border:1px solid var(--border);border-radius:20px;width:100%;max-width:700px;max-height:85vh;overflow-y:auto;position:relative;transform:scale(0.95);transition:transform 0.3s}
-.modal.active .modal-content{transform:scale(1)}
-.modal-header{padding:28px;border-bottom:1px solid rgba(255,255,255,0.05);position:relative}
-.modal-close{position:absolute;top:20px;right:20px;width:36px;height:36px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:#fff;border-radius:10px;cursor:pointer;font-size:18px;display:grid;place-items:center;transition:all 0.2s}
-.modal-close:hover{background:var(--red);transform:rotate(90deg)}
-.modal-header h2{color:var(--orange);font-family:'Space Grotesk',sans-serif;font-size:26px;font-weight:700;margin-bottom:6px}
-.modal-header p{color:var(--text-dim);font-size:14px}
-.modal-body{padding:24px;display:grid;grid-template-columns:1fr 1fr;gap:20px}
-.modal-section{background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.05);border-radius:12px;padding:16px}
-.modal-section h4{color:var(--orange);font-size:13px;font-weight:700;text-transform:uppercase;margin-bottom:14px}
+.modal-content{background:var(--card);border:1px solid var(--border);border-radius:24px;width:100%;max-width:800px;max-height:90vh;overflow-y:auto;position:relative;transform:scale(0.9) translateY(30px);transition:transform 0.4s cubic-bezier(0.16,1,0.3,1);box-shadow:0 40px 120px rgba(0,0,0,0.5)}
+.modal.active .modal-content{transform:scale(1) translateY(0)}
+.modal-header{padding:35px;border-bottom:1px solid var(--border);position:relative;background:linear-gradient(135deg,rgba(255,107,53,0.05) 0%,transparent 100%)}
+.modal-close{position:absolute;top:25px;right:25px;width:42px;height:42px;background:var(--bg);border:1px solid var(--border);color:#fff;border-radius:12px;cursor:pointer;font-size:20px;display:grid;place-items:center;transition:all 0.3s}
+.modal-close:hover{background:var(--red);border-color:var(--red);transform:rotate(90deg);box-shadow:0 10px 30px rgba(230,57,70,0.3)}
+.modal-header h2{color:var(--orange);font-family:'Space Grotesk',sans-serif;font-size:32px;font-weight:800;margin-bottom:8px;letter-spacing:-1px}
+.modal-header p{color:var(--text-dim);font-size:15px;font-weight:500}
+.modal-body{padding:35px;display:grid;grid-template-columns:1fr 1fr;gap:25px}
+.modal-section{background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:16px;padding:22px;transition:all 0.3s}
+.modal-section:hover{background:rgba(255,255,255,0.03);border-color:rgba(255,107,53,0.2);transform:translateY(-3px)}
+.modal-section h4{color:var(--orange);font-size:13px;font-weight:700;text-transform:uppercase;margin-bottom:18px;letter-spacing:1px;display:flex;align-items:center;gap:10px}
+.modal-section h4 svg{width:20px;height:20px}
 .modal-section ul{list-style:none}
-.modal-section li{padding:8px 0;color:var(--text-dim);font-size:14px;border-bottom:1px solid rgba(255,255,255,0.04)}
+.modal-section li{padding:10px 0;color:var(--text-dim);font-size:14px;border-bottom:1px solid rgba(255,255,255,0.04);transition:all 0.2s;display:flex;align-items:center;gap:8px}
+.modal-section li:hover{color:var(--text);padding-left:5px}
+.modal-section li::before{content:'';width:4px;height:4px;background:var(--orange);border-radius:50%}
 .modal-section li:last-child{border:none}
 .modal-section:last-of-type{grid-column:1/-1}
-.dl-btn{grid-column:1/-1;display:flex;align-items:center;justify-content:center;gap:10px;padding:16px;background:linear-gradient(135deg,var(--red),#b91c1c);color:#fff;text-decoration:none;border-radius:12px;font-weight:700;font-size:15px;margin-top:8px;transition:all 0.3s;border:none;cursor:pointer}
-.dl-btn:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(220,38,38,0.4)}
-@media(max-width:768px){h1{font-size:36px}.cards{grid-template-columns:1fr}.nav-links{display:none}.stats{gap:30px}.modal-body{grid-template-columns:1fr}}
+.changelog{background:rgba(255,107,53,0.05);border:1px solid rgba(255,107,53,0.15);border-radius:12px;padding:18px;margin-top:15px}
+.changelog-title{font-size:13px;font-weight:700;color:var(--orange);margin-bottom:12px;text-transform:uppercase;letter-spacing:0.5px}
+.changelog-item{padding:8px 0;font-size:13px;color:var(--text-dim);border-bottom:1px solid rgba(255,255,255,0.04)}
+.changelog-item:last-child{border:none}
+.changelog-date{color:var(--text-muted);font-size:11px;margin-bottom:4px}
+.dl-btn{grid-column:1/-1;display:flex;align-items:center;justify-content:center;gap:12px;padding:20px;background:linear-gradient(135deg,var(--red),var(--red-bright));color:#fff;text-decoration:none;border-radius:16px;font-weight:700;font-size:16px;margin-top:10px;transition:all 0.3s;border:none;cursor:pointer;position:relative;overflow:hidden}
+.dl-btn::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.3),transparent);transition:left 0.6s}
+.dl-btn:hover::before{left:100%}
+.dl-btn svg{width:22px;height:22px}
+.dl-btn:hover{transform:translateY(-3px);box-shadow:0 20px 50px rgba(230,57,70,0.4)}
+.share-btn{grid-column:1/-1;display:flex;align-items:center;justify-content:center;gap:10px;padding:16px;background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:12px;color:var(--text);font-weight:600;font-size:14px;cursor:pointer;transition:all 0.3s}
+.share-btn:hover{background:rgba(255,255,255,0.1);border-color:var(--orange)}
+
+::-webkit-scrollbar{width:10px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:linear-gradient(180deg,var(--orange),var(--red));border-radius:5px}
+::-webkit-scrollbar-thumb:hover{background:var(--red-bright)}
+
+@media(max-width:1024px){h1{font-size:56px}.sec-title{font-size:40px}.cards{grid-template-columns:repeat(2,1fr)}.breadcrumb{left:20px}}
+@media(max-width:768px){h1{font-size:42px}.sec-title{font-size:32px}.cards{grid-template-columns:1fr}.nav-links{display:none}.stats{gap:40px}.hero p{font-size:16px}.modal-body{grid-template-columns:1fr;padding:25px}.modal-header h2{font-size:26px}.filters{flex-direction:column;align-items:stretch}.filter-select{width:100%}.breadcrumb{display:none}}
+@media(max-width:480px){h1{font-size:36px}.hero-badge{font-size:12px;padding:8px 16px}.btn{padding:14px 24px;font-size:14px}}
 </style>
 </head>
 <body>
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TLHKHKNS" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<nav>
-  <a href="#" class="logo"><img src="fox-logo.png" alt="FOX" class="logo-img">FOX CHEATS</a>  <ul class="nav-links">
+<div class="bg-animation"></div>
+<div class="breadcrumb" id="breadcrumb">
+  <a href="#">Главная</a>
+  <span>/</span>
+  <a href="#clients">Клиенты</a>
+  <span id="breadcrumb-current"></span>
+</div>
+
+<div class="progress-overlay" id="progressOverlay">
+  <div class="progress-box">
+    <div class="progress-title">Подготовка к скачиванию...</div>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="progress-text" id="progressText">0%</div>
+    <button class="progress-cancel" onclick="cancelDownload()">Отменить</button>
+  </div>
+</div>
+
+<nav id="navbar">
+  <a href="#" class="logo"><img src="fox-logo.png" alt="FOX" class="logo-img">FOX CHEATS</a>
+  <ul class="nav-links">
     <li><a href="#clients">Клиенты</a></li>
     <li><a href="#faq">FAQ</a></li>
     <li><a href="https://t.me/Foxcheats" target="_blank">Канал</a></li>
     <li><div class="theme-toggle" id="themeToggle"></div></li>
   </ul>
 </nav>
+
 <section class="hero">
-  <div class="hero-badge">🚀 Лаунчер клиентов Minecraft</div>
+  <div class="hero-badge">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+    Премиальный лаунчер Minecraft
+  </div>
   <h1>FOX CHEATS</h1>
-  <p>Премиальный лаунчер с клиентами для Minecraft. Wasteland, Vibe, Nix, Soltise, Nightix, Hydra — всё в одном месте.</p>
-  <div><a href="#clients" class="btn">Скачать клиенты</a><a href="https://t.me/Foxcheats" class="btn btn-ghost">Telegram</a></div>
-  <div class="stats"><div class="stat"><div class="stat-num">6</div><div class="stat-lbl">Клиентов</div></div><div class="stat"><div class="stat-num">7+</div><div class="stat-lbl">Серверов</div></div><div class="stat"><div class="stat-num">24/7</div><div class="stat-lbl">Поддержка</div></div></div>
-</section>
-<section class="section" id="clients">
-  <div class="sec-head"><div class="sec-tag">MINECRAFT CLIENTS</div><h2 class="sec-title">Клиенты лаунчера</h2><p class="sec-sub">Выберите клиент для вашего стиля игры</p></div>
-  <div class="search-box"><input type="text" id="searchInput" placeholder="Поиск клиентов..."></div>
-  <div class="cards" id="cardsContainer">
-    <div class="card" data-client="wasteland" data-name="wasteland pvp killaura"><div class="card-image-wrap"><img src="wasteland-logo.png" alt="Wasteland" class="card-img"></div><div class="card-content"><div class="card-head"><div><h3>WASTELAND</h3><div class="card-version">v4.2 · PvP клиент</div></div><span class="status"><span class="dot"></span>Работает</span></div><p>Боевой клиент для PvP-арен. Мощные модули KillAura и Reach для доминирования.</p><div class="card-tags"><span class="tag">PvP</span><span class="tag">KillAura</span><span class="tag">Reach</span></div><div class="card-footer"><div class="card-btn">Подробнее <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></div></div></div>
-    <div class="card" data-client="vibe" data-name="vibe universal customizable"><div class="card-image-wrap"><img src="vibe-logo.png" alt="Vibe" class="card-img"></div><div class="card-content"><div class="card-head"><div><h3>VIBE</h3><div class="card-version">v3.8 · Универсальный</div></div><span class="status"><span class="dot"></span>Обновлен</span></div><p>Универсальный клиент с 200+ функциями. Для выживания, PvP и PvE.</p><div class="card-tags"><span class="tag">Universal</span><span class="tag">200+ функций</span><span class="tag">Stable</span></div><div class="card-footer"><div class="card-btn">Подробнее <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></div></div></div>
-    <div class="card" data-client="nix" data-name="nix stealth bypass"><div class="card-image-wrap"><img src="nix-logo.png" alt="Nix" class="card-img"></div><div class="card-content"><div class="card-head"><div><h3>NIX</h3><div class="card-version">v5.0 · Stealth</div></div><span class="status"><span class="dot"></span>Стабильно</span></div><p>Стелс-клиент с обходом Matrix, Grim, Vulcan. Максимальная скрытность.</p><div class="card-tags"><span class="tag">Bypass</span><span class="tag">Grim</span><span class="tag">Vulcan</span></div><div class="card-footer"><div class="card-btn">Подробнее <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></div></div></div>
-    <div class="card" data-client="soltise" data-name="soltise pvp funtime"><div class="card-image-wrap"><img src="soltise-logo.png" alt="Soltise" class="card-img"></div><div class="card-content"><div class="card-head"><div><h3>SOLTISE</h3><div class="card-version">v1.0 · PvP 1.16.5</div></div><span class="status"><span class="dot"></span>Работает</span></div><p>PvP клиент для 1.16.5. Обходит FunTime и ReallyWorld.</p><div class="card-tags"><span class="tag">PvP</span><span class="tag">1.16.5</span><span class="tag">FunTime</span></div><div class="card-footer"><div class="card-btn">Подробнее <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></div></div></div>
-    <div class="card" data-client="nightix" data-name="nightix funtime 1.21.4"><div class="card-image-wrap"><img src="nightix-logo.png" alt="Nightix" class="card-img"></div><div class="card-content"><div class="card-head"><div><h3>NIGHTIX</h3><div class="card-version">v1.21.4 · Night DLC</div></div><span class="status"><span class="dot"></span>Новый</span></div><p>Специализированный клиент для FunTime 1.21.4. Последняя версия.</p><div class="card-tags"><span class="tag">FunTime</span><span class="tag">1.21.4</span><span class="tag">New</span></div><div class="card-footer"><div class="card-btn">Подробнее <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></div></div></div>
-    <div class="card" data-client="hydra" data-name="hydra dlc launcher"><div class="card-image-wrap"><img src="hydra-logo.png" alt="Hydra" class="card-img"></div><div class="card-content"><div class="card-head"><div><h3>HYDRA</h3><div class="card-version">DLC · Лаунчер</div></div><span class="status"><span class="dot"></span>Лаунчер</span></div><p>Удобный лаунчер для управления клиентами. Быстрая установка.</p><div class="card-tags"><span class="tag">Launcher</span><span class="tag">Manager</span><span class="tag">Easy</span></div><div class="card-footer"><div class="card-btn">Подробнее <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></div></div></div>
+  <p>Топовые клиенты для Minecraft с обходом античитов. 10 проверенных клиентов для разных версий и стилей игры. Быстро, безопасно, бесплатно.</p>
+  <div>
+    <a href="#clients" class="btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Выбрать клиент
+    </a>
+    <a href="https://t.me/Foxcheats" class="btn btn-ghost">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 5L2 12.5l7 1M21 5l-8.5 13M21 5L12 18.5"/></svg>
+      Telegram
+    </a>
+  </div>
+  <div class="stats">
+    <div class="stat"><div class="stat-num" id="totalClients">10</div><div class="stat-lbl">Клиентов</div></div>
+    <div class="stat"><div class="stat-num">7+</div><div class="stat-lbl">Серверов</div></div>
+    <div class="stat"><div class="stat-num" id="totalDownloads">0</div><div class="stat-lbl">Скачиваний</div></div>
   </div>
 </section>
+<section class="section" id="clients">
+  <div class="sec-head">
+    <div class="sec-tag">MINECRAFT CLIENTS</div>
+    <h2 class="sec-title">Выберите свой клиент</h2>
+    <p class="sec-sub">Проверенные решения для максимального комфорта в игре</p>
+  </div>
+  
+  <div class="filters">
+    <div class="filter-group">
+      <label class="filter-label">Версия Minecraft</label>
+      <select class="filter-select" id="filterVersion" onchange="applyFilters()">
+        <option value="">Все версии</option>
+        <option value="1.16.5">1.16.5</option>
+        <option value="1.21.4">1.21.4</option>
+        <option value="other">Другие</option>
+      </select>
+    </div>
+    <div class="filter-group">
+      <label class="filter-label">Сервер</label>
+      <select class="filter-select" id="filterServer" onchange="applyFilters()">
+        <option value="">Все серверы</option>
+        <option value="FunTime">FunTime</option>
+        <option value="SpookyTime">SpookyTime</option>
+        <option value="HolyWorld">HolyWorld</option>
+        <option value="ReallyWorld">ReallyWorld</option>
+      </select>
+    </div>
+    <div class="filter-group">
+      <label class="filter-label">Тип</label>
+      <select class="filter-select" id="filterType" onchange="applyFilters()">
+        <option value="">Все типы</option>
+        <option value="PvP">PvP</option>
+        <option value="Universal">Универсальный</option>
+        <option value="Stealth">Stealth</option>
+      </select>
+    </div>
+    <button class="filter-clear" onclick="clearFilters()">Сбросить</button>
+  </div>
+
+  <div class="search-box">
+    <svg class="search-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+    <input type="text" id="searchInput" placeholder="Поиск клиентов...">
+  </div>
+  
+  <div class="cards" id="cardsContainer"></div>
+</section>
+
 <section class="section faq-section" id="faq">
-  <div class="sec-head"><div class="sec-tag">FAQ</div><h2 class="sec-title">Частые вопросы</h2><p class="sec-sub">Ответы на популярные вопросы</p></div>
+  <div class="sec-head">
+    <div class="sec-tag">FAQ</div>    <h2 class="sec-title">Частые вопросы</h2>
+    <p class="sec-sub">Ответы на популярные вопросы о лаунчере</p>
+  </div>
   <div class="faq-container">
     <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)"><h3>Как установить клиенты?</h3><svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div><div class="faq-answer"><p>1. Скачайте файл клиента<br>2. Откройте папку лаунчера<br>3. Найдите папку versions<br>4. Скопируйте папку с клиентом туда<br>5. Запустите Minecraft с нужной версией</p></div></div>
     <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)"><h3>Безопасно ли использовать лаунчер?</h3><svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div><div class="faq-answer"><p>Все клиенты проверены на вирусы. Лаунчер не собирает личные данные. Однако использование клиентов может привести к бану на серверах.</p></div></div>
     <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)"><h3>Какие клиенты лучше для FunTime?</h3><svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div><div class="faq-answer"><p>Для FunTime рекомендуем Wasteland (для PvP), Vibe (универсал) или Nix (для обхода античита).</p></div></div>
-    <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)"><h3>Как получить поддержку?</h3><svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div><div class="faq-answer"><p>По всем вопросам пишите в Telegram: <a href="https://t.me/newfen" style="color:var(--orange)">@newfen</a></p></div></div>
+    <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)"><h3>Как получить поддержку?</h3><svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div><div class="faq-answer"><p>По всем вопросам пишите в Telegram: <a href="https://t.me/newfen" target="_blank">@newfen</a></p></div></div>
   </div>
 </section>
-<footer><p>FOX CHEATS © 2026 · <a href="https://t.me/Foxcheats">Telegram канал</a> · <a href="https://t.me/newfen">Поддержка</a></p></footer>
+
+<footer>
+  <p>FOX CHEATS © 2026 · <a href="https://t.me/Foxcheats" target="_blank">Telegram канал</a> · <a href="https://t.me/newfen" target="_blank">Поддержка</a></p>
+</footer>
+
 <div class="modal" id="modal" onclick="if(event.target===this)closeModal()">
   <div class="modal-content">
     <div class="modal-header"><button class="modal-close" onclick="closeModal()">×</button><h2 id="m-title">CLIENT</h2><p id="m-sub"></p></div>
     <div class="modal-body">
-      <div class="modal-section"><h4>⚡ Функции</h4><ul id="m-features"></ul></div>
-      <div class="modal-section"><h4>🛡️ Обход античитов</h4><ul id="m-bypass"></ul></div>
-      <div class="modal-section"><h4>🎮 Серверы</h4><ul id="m-servers"></ul></div>
-      <button class="dl-btn" id="m-dl" type="button"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>СКАЧАТЬ КЛИЕНТ</button>
+      <div class="modal-section"><h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>Функции</h4><ul id="m-features"></ul></div>
+      <div class="modal-section"><h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Обход античитов</h4><ul id="m-bypass"></ul></div>
+      <div class="modal-section"><h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v18h-6M10 17l4-2.5M10 12l4-2.5M10 7l4-2.5M4 17l4-2.5M4 12l4-2.5M4 7l4-2.5"/></svg>Серверы</h4><ul id="m-servers"></ul></div>
+      <div class="modal-section" style="grid-column:1/-1"><h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>История обновлений</h4><div id="m-changelog"></div></div>
+      <button class="share-btn" id="m-share" onclick="shareClient()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.59 13.51l6.83 3.98M15.41 6.51l-6.82 3.98"/></svg>
+        Поделиться
+      </button>
+      <button class="dl-btn" id="m-dl" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>СКАЧАТЬ КЛИЕНТ</button>
     </div>
   </div>
 </div>
+
 <script>
 const clients={
-  wasteland:{title:'WASTELAND',sub:'PvP Focus · v4.2',desc:'Боевой клиент для PvP-арен.',features:['Smart KillAura','Advanced Reach','Criticals','AutoClicker','Velocity','AutoArmor'],bypass:['FunTime — 9/10','SpookyTime — 8/10','Matrix — 6/10'],servers:['FunTime','SpookyTime','HolyWorld','ReallyWorld'],advantages:['PvP оптимизация','Низкая нагрузка','Простая настройка'],dl:'https://drive.google.com/file/d/10hlUq4OtVdHz_bkph6WKYXHQlK7B8Fld/view?usp=drive_link'},  vibe:{title:'VIBE',sub:'Universal · v3.8',desc:'Универсальный клиент с 200+ функциями.',features:['200+ модулей','Custom GUI','ESP & Tracers','XRay','AutoFarm','Music Player'],bypass:['FunTime — 9/10','Grim — 7.5/10','Matrix — 8/10'],servers:['FunTime','SpookyTime','HolyWorld','ReallyWorld'],advantages:['Универсальность','Красивый GUI','Облачные профили'],dl:'https://workupload.com/file/tk462WxraSD'},
-  nix:{title:'NIX',sub:'Stealth · v5.0',desc:'Стелс-клиент с лучшим обходом.',features:['Stealth KillAura','Blink','Packet Spoofer','Anti-Report','Smart Scaffold'],bypass:['Grim — 10/10','Vulcan — 10/10','Matrix — 10/10'],servers:['FunTime','SpookyTime','HolyWorld','ReallyWorld'],advantages:['Максимальная скрытность','Авто-конфиги','Поддержка новых AC'],dl:'https://drive.google.com/drive/u/1/folders/1fD6slZLLW0fRPPMJsqIEovzqcodVBbOq'},
-  soltise:{title:'SOLTISE',sub:'PvP · v1.16.5',desc:'PvP клиент для 1.16.5.',features:['KillAura','Reach','AutoClicker','Velocity','Minimal FPS drop'],bypass:['FunTime — Full','ReallyWorld — Full','Matrix — Partial'],servers:['FunTime','ReallyWorld','Matrix','HolyWorld'],advantages:['Легкий','Быстрый','Простой'],dl:'https://workupload.com/file/efXByRVsGU8'},
-  nightix:{title:'NIGHTIX',sub:'FunTime · v1.21.4',desc:'Клиент для FunTime 1.21.4.',features:['KillAura 1.21.4','AutoFarm','ESP','Custom ClickGUI','Auto Config'],bypass:['FunTime 1.21.4 — Full','Grim — Partial','Vulcan — Partial'],servers:['FunTime','HolyWorld','SpookyTime'],advantages:['Поддержка 1.21.4','Оптимизация','Красивый интерфейс'],dl:'https://workupload.com/file/eAHVCQUAq46'},
-  hydra:{title:'HYDRA',sub:'Launcher',desc:'Лаунчер для управления.',features:['Удобный интерфейс','Быстрая установка','Автообновления','Управление клиентами','Простая навигация'],bypass:['N/A — Лаунчер'],servers:['Все серверы'],advantages:['Простота','Быстрая установка','Автообновления'],dl:'https://go.linkify.ru/2HgU'}
+  wasteland:{title:'WASTELAND',sub:'PvP Focus · v4.2',desc:'Боевой клиент для PvP-арен.',features:['Smart KillAura','Advanced Reach','Criticals','AutoClicker','Velocity','AutoArmor'],bypass:['FunTime — 9/10','SpookyTime — 8/10','Matrix — 6/10'],servers:['FunTime','SpookyTime','HolyWorld','ReallyWorld'],advantages:['PvP оптимизация','Низкая нагрузка','Простая настройка'],dl:'https://drive.google.com/file/d/10hlUq4OtVdHz_bkph6WKYXHQlK7B8Fld/view?usp=drive_link',virustotal:'https://www.virustotal.com',lastUpdate:'2026-05-25',downloads:1247,rating:4.8,version:'1.16.5',type:'PvP',online:true,changelog:[{date:'25.05.2026',changes:['Улучшен обход Grim','Добавлен AutoArmor','Исправлены баги с Reach']},{date:'20.05.2026',changes:['Обновлена KillAura','Улучшена стабильность']}]},
+  vibe:{title:'VIBE',sub:'Universal · v3.8',desc:'Универсальный клиент с 200+ функциями.',features:['200+ модулей','Custom GUI','ESP & Tracers','XRay','AutoFarm','Music Player'],bypass:['FunTime — 9/10','Grim — 7.5/10','Matrix — 8/10'],servers:['FunTime','SpookyTime','HolyWorld','ReallyWorld'],advantages:['Универсальность','Красивый GUI','Облачные профили'],dl:'https://workupload.com/file/tk462WxraSD',virustotal:'https://www.virustotal.com',lastUpdate:'2026-05-20',downloads:2156,rating:4.9,version:'1.16.5',type:'Universal',online:true,changelog:[{date:'20.05.2026',changes:['Добавлено 20 новых модулей','Улучшен GUI','Исправлены ошибки']}]},
+  nix:{title:'NIX',sub:'Stealth · v5.0',desc:'Стелс-клиент с лучшим обходом.',features:['Stealth KillAura','Blink','Packet Spoofer','Anti-Report','Smart Scaffold'],bypass:['Grim — 10/10','Vulcan — 10/10','Matrix — 10/10'],servers:['FunTime','SpookyTime','HolyWorld','ReallyWorld'],advantages:['Максимальная скрытность','Авто-конфиги','Поддержка новых AC'],dl:'https://drive.google.com/drive/u/1/folders/1fD6slZLLW0fRPPMJsqIEovzqcodVBbOq',virustotal:'https://www.virustotal.com',lastUpdate:'2026-05-22',downloads:1893,rating:4.95,version:'1.16.5',type:'Stealth',online:true,changelog:[{date:'22.05.2026',changes:['Полный обход Vulcan','Улучшен Packet Spoofer']}]},
+  soltise:{title:'SOLTISE',sub:'PvP · v1.16.5',desc:'PvP клиент для 1.16.5.',features:['KillAura','Reach','AutoClicker','Velocity','Minimal FPS drop'],bypass:['FunTime — Full','ReallyWorld — Full','Matrix — Partial'],servers:['FunTime','ReallyWorld','Matrix','HolyWorld'],advantages:['Легкий','Быстрый','Простой'],dl:'https://workupload.com/file/efXByRVsGU8',virustotal:'https://www.virustotal.com',lastUpdate:'2026-05-18',downloads:876,rating:4.6,version:'1.16.5',type:'PvP',online:true,changelog:[]},
+  nightix:{title:'NIGHTIX',sub:'FunTime · v1.21.4',desc:'Клиент для FunTime 1.21.4.',features:['KillAura 1.21.4','AutoFarm','ESP','Custom ClickGUI','Auto Config'],bypass:['FunTime 1.21.4 — Full','Grim — Partial','Vulcan — Partial'],servers:['FunTime','HolyWorld','SpookyTime'],advantages:['Поддержка 1.21.4','Оптимизация','Красивый интерфейс'],dl:'https://workupload.com/file/eAHVCQUAq46',virustotal:'https://www.virustotal.com',lastUpdate:'2026-05-26',downloads:543,rating:4.7,version:'1.21.4',type:'PvP',online:true,changelog:[{date:'26.05.2026',changes:['Новый клиент!','Поддержка 1.21.4']}]},
+  hydra:{title:'HYDRA',sub:'Launcher',desc:'Лаунчер для управления.',features:['Удобный интерфейс','Быстрая установка','Автообновления','Управление клиентами','Простая навигация'],bypass:['N/A — Лаунчер'],servers:['Все серверы'],advantages:['Простота','Быстрая установка','Автообновления'],dl:'https://go.linkify.ru/2HgU',virustotal:'https://www.virustotal.com',lastUpdate:'2026-05-15',downloads:3421,rating:4.5,version:'other',type:'Universal',online:true,changelog:[]},
+  newlauncher:{title:'NEW LAUNCHER',sub:'Launcher · v2.0.9',desc:'Новый лаунчер с читами для Windows.',features:['Удобный интерфейс','Быстрая загрузка','Автоматические обновления','Поддержка x64','Интеграция с клиентами','Безопасная установка'],bypass:['N/A — Лаунчер'],servers:['Все серверы'],advantages:['Современный дизайн','Быстрая работа','Простая установка','Регулярные обновления'],dl:'https://api.launchernew.ru/api/launcher/react/windows/x64/NewLauncher-2.0.9-windows-x64.exe',virustotal:'https://www.virustotal.com',lastUpdate:'2026-05-10',downloads:2876,rating:4.4,version:'other',type:'Universal',online:true,changelog:[]},
+  venus:{title:'VENUS',sub:'Free · 1.16.5',desc:'Старый но мощный бесплатный чит для 1.16.5.',features:['KillAura','Reach','ESP','XRay','AutoFarm','Fly','Speed'],bypass:['FunTime — 7/10','SpookyTime — 7/10','Matrix — 6/10'],servers:['FunTime','SpookyTime','HolyWorld','ReallyWorld'],advantages:['Полностью бесплатный','Проверен временем','Стабильная работа','Легкий клиент'],dl:'https://venusware.fun/',virustotal:'https://www.virustotal.com',lastUpdate:'2026-04-15',downloads:1654,rating:4.3,version:'1.16.5',type:'PvP',online:true,changelog:[]},
+  sunlight:{title:'SUNLIGHT',sub:'Client · 1.16.5',desc:'Качественный клиент для версии 1.16.5.',features:['KillAura','AutoFarm','ESP','Tracers','XRay','Custom GUI','Auto Config'],bypass:['FunTime — 8/10','Grim — 7/10','Matrix — 7/10'],servers:['FunTime','SpookyTime','HolyWorld','ReallyWorld'],advantages:['Оптимальный баланс','Стабильность','Хороший обход','Удобный интерфейс'],dl:'https://workupload.com/file/4h5LzA37Rka',virustotal:'https://www.virustotal.com',lastUpdate:'2026-05-12',downloads:1123,rating:4.5,version:'1.16.5',type:'Universal',online:true,changelog:[]},
+  lynxwave:{title:'LYNXWAVE',sub:'Client · v1.5',desc:'Современный клиент с уникальным дизайном.',features:['KillAura','AutoFarm','ESP','Tracers','XRay','Custom GUI','Auto Config','Modern Design'],bypass:['FunTime — 8/10','Grim — 7/10','Matrix — 7/10','Vulcan — 7/10'],servers:['FunTime','SpookyTime','HolyWorld','ReallyWorld'],advantages:['Современный дизайн','Удобный интерфейс','Стабильная работа','Оптимальный набор функций'],dl:'https://www.dropbox.com/scl/fi/qvm71akbrrzgcjmeng3ux/LynxWave-1.5.zip?rlkey=mllwc9shxd2fb669kd96mbucs&st=gd7n0gwj&dl=1',virustotal:'https://www.virustotal.com',lastUpdate:'2026-05-27',downloads:234,rating:4.8,version:'1.16.5',type:'Universal',online:true,changelog:[{date:'27.05.2026',changes:['Новый клиент добавлен!']}]}
 };
-let currentClient=null;
+
+let currentModalClient=null;
+
+document.addEventListener('DOMContentLoaded',()=>{
+  renderCards();  loadTotalDownloads();
+  setupScrollAnimations();
+  updateBreadcrumb();
+});
+
+function renderCards(filteredClients=null){
+  const container=document.getElementById('cardsContainer');
+  const clientsToRender=filteredClients||Object.keys(clients);
+  
+  container.innerHTML=clientsToRender.map(key=>{
+    const c=clients[key];
+    const stars=renderStars(c.rating);
+    return `
+      <div class="card" data-client="${key}" data-version="${c.version}" data-type="${c.type}" data-servers="${c.servers.join(',')}">
+        <div class="card-image-wrap"><img src="${key}-logo.png" alt="${c.title}" class="card-img" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22100%22 height=%22100%22%3E%3Crect fill=%22%23ff6b35%22 width=%22100%22 height=%22100%22/%3E%3Ctext fill=%22white%22 x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 font-size=%2240%22%3E${c.title[0]}%3C/text%3E%3C/svg%3E'"></div>
+        <div class="card-content">
+          <div class="card-header">
+            <div>
+              <h3>${c.title}</h3>
+              <div class="version">${c.sub}</div>
+            </div>
+            <span class="status ${c.online?'':'offline'}"><span class="dot"></span>${c.online?'Работает':'Оффлайн'}</span>
+          </div>
+          <p>${c.desc}</p>
+          <div class="tags">
+            <span class="tag">${c.type}</span>
+            <span class="tag">${c.version}</span>
+          </div>
+          <div class="security-badges">
+            <span class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Проверено</span>
+            <a href="${c.virustotal}" target="_blank" class="badge virustotal" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>VirusTotal</a>
+          </div>
+          <div class="last-updated">Обновлено ${timeAgo(c.lastUpdate)}</div>
+          <div class="card-footer">
+            <div class="rating">
+              <div class="stars">${stars}</div>
+              <span>${c.rating}</span>
+            </div>
+            <div class="downloads">⬇ ${c.downloads.toLocaleString()}</div>
+            <div class="more-btn">Подробнее <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+  
+  setTimeout(()=>setupScrollAnimations(),100);
+  
+  document.querySelectorAll('.card').forEach(card=>{
+    card.addEventListener('click',function(){      openModal(this.getAttribute('data-client'));
+    });
+  });
+}
+
+function renderStars(rating){
+  let html='';
+  for(let i=1;i<=5;i++){
+    if(i<=Math.floor(rating)) html+='<span class="star filled">★</span>';
+    else if(i-0.5<=rating) html+='<span class="star half">☆</span>';
+    else html+='<span class="star">☆</span>';
+  }
+  return html;
+}
+
+function timeAgo(dateStr){
+  const date=new Date(dateStr);
+  const now=new Date();
+  const diff=Math.floor((now-date)/1000);
+  if(diff<60)return 'только что';
+  if(diff<3600)return Math.floor(diff/60)+' мин. назад';
+  if(diff<86400)return Math.floor(diff/3600)+' ч. назад';
+  if(diff<604800)return Math.floor(diff/86400)+' дн. назад';
+  return date.toLocaleDateString('ru-RU');
+}
+
+function applyFilters(){
+  const version=document.getElementById('filterVersion').value;
+  const server=document.getElementById('filterServer').value;
+  const type=document.getElementById('filterType').value;
+  
+  let filtered=Object.keys(clients).filter(key=>{
+    const c=clients[key];
+    let match=true;
+    if(version&&c.version!==version)match=false;
+    if(server&&!c.servers.includes(server))match=false;
+    if(type&&c.type!==type)match=false;
+    return match;
+  });
+  
+  renderCards(filtered);
+}
+
+function clearFilters(){
+  document.getElementById('filterVersion').value='';
+  document.getElementById('filterServer').value='';
+  document.getElementById('filterType').value='';
+  renderCards();
+}
 document.getElementById('searchInput').addEventListener('input',function(){
   const val=this.value.toLowerCase();
-  document.querySelectorAll('.card').forEach(card=>{
-    const name=card.getAttribute('data-client');
-    card.style.display=name.includes(val)?'block':'none';
+  const filtered=Object.keys(clients).filter(key=>{
+    const c=clients[key];
+    return key.toLowerCase().includes(val)||c.title.toLowerCase().includes(val)||c.desc.toLowerCase().includes(val);
   });
+  renderCards(filtered);
 });
+
 function openModal(key){
   const c=clients[key];
   if(!c)return;
-  currentClient=c;
+  currentModalClient=key;
   document.getElementById('m-title').textContent=c.title;
   document.getElementById('m-sub').textContent=c.sub;
   document.getElementById('m-features').innerHTML=c.features.map(f=>`<li>${f}</li>`).join('');
   document.getElementById('m-bypass').innerHTML=c.bypass.map(b=>`<li>${b}</li>`).join('');
   document.getElementById('m-servers').innerHTML=c.servers.map(s=>`<li>${s}</li>`).join('');
+  
+  if(c.changelog&&c.changelog.length>0){
+    document.getElementById('m-changelog').innerHTML=`
+      <div class="changelog">
+        <div class="changelog-title">История обновлений</div>
+        ${c.changelog.map(entry=>`
+          <div class="changelog-item">
+            <div class="changelog-date">${entry.date}</div>
+            <div>${entry.changes.join(', ')}</div>
+          </div>
+        `).join('')}
+      </div>
+    `;
+  }else{
+    document.getElementById('m-changelog').innerHTML='<div class="changelog"><div class="changelog-title">История обновлений</div><div style="color:var(--text-muted);font-size:13px">Нет записей</div></div>';
+  }
+  
   document.getElementById('modal').classList.add('active');
   document.body.style.overflow='hidden';
+  updateBreadcrumb();
 }
+
 function closeModal(){
   document.getElementById('modal').classList.remove('active');
   document.body.style.overflow='';
-  currentClient=null;
+  currentModalClient=null;
+  updateBreadcrumb();
 }
+
+function shareClient(){
+  if(!currentModalClient)return;
+  const url=window.location.href.split('#')[0]+'#client='+currentModalClient;  navigator.clipboard.writeText(url).then(()=>{
+    alert('Ссылка скопирована!');
+  });
+}
+
 document.getElementById('m-dl').addEventListener('click',function(){
-  if(currentClient && currentClient.dl){
-    window.open(currentClient.dl,'_blank');
-  }
+  if(!currentModalClient||!clients[currentModalClient])return;
+  startDownload(currentModalClient);
 });
+
+function startDownload(clientKey){
+  const c=clients[clientKey];
+  const overlay=document.getElementById('progressOverlay');
+  const fill=document.getElementById('progressFill');
+  const text=document.getElementById('progressText');
+  
+  overlay.classList.add('active');
+  let progress=0;
+  const interval=setInterval(()=>{
+    progress+=Math.random()*15;
+    if(progress>100)progress=100;
+    fill.style.width=progress+'%';
+    text.textContent=Math.floor(progress)+'%';
+    if(progress===100){
+      clearInterval(interval);
+      setTimeout(()=>{
+        overlay.classList.remove('active');
+        fill.style.width='0%';
+        text.textContent='0%';
+        window.open(c.dl,'_blank');
+        incrementDownload(clientKey);
+        alert('Скачивание началось! Проверьте папку загрузок.');
+      },500);
+    }
+  },200);
+}
+
+function cancelDownload(){
+  document.getElementById('progressOverlay').classList.remove('active');
+  document.getElementById('progressFill').style.width='0%';
+  document.getElementById('progressText').textContent='0%';
+}
+
+function incrementDownload(key){
+  clients[key].downloads++;
+  localStorage.setItem('foxcheats_downloads',JSON.stringify(Object.keys(clients).reduce((acc,k)=>{acc[k]=clients[k].downloads;return acc},{})));
+  loadTotalDownloads();
+  renderCards();
+}
+function loadTotalDownloads(){
+  const saved=localStorage.getItem('foxcheats_downloads');
+  if(saved){
+    const data=JSON.parse(saved);
+    Object.keys(data).forEach(key=>{if(clients[key])clients[key].downloads=data[key]});
+  }
+  const total=Object.values(clients).reduce((sum,c)=>sum+c.downloads,0);
+  document.getElementById('totalDownloads').textContent=total.toLocaleString();
+}
+
+function setupScrollAnimations(){
+  const observer=new IntersectionObserver(entries=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  },{threshold:0.1,delay:100});
+  
+  document.querySelectorAll('.card').forEach(card=>observer.observe(card));
+}
+
+function updateBreadcrumb(){
+  const breadcrumb=document.getElementById('breadcrumb');
+  const current=document.getElementById('breadcrumb-current');
+  
+  window.addEventListener('scroll',()=>{
+    if(window.scrollY>400) breadcrumb.classList.add('visible');
+    else breadcrumb.classList.remove('visible');
+  });
+  
+  if(currentModalClient) current.innerHTML=`<span>/</span><span>${clients[currentModalClient].title}</span>`;
+  else current.innerHTML='';
+}
+
 function toggleFaq(el){
   const item=el.parentElement;
   const isActive=item.classList.contains('active');
   document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('active'));
   if(!isActive)item.classList.add('active');
 }
+
 const themeToggle=document.getElementById('themeToggle');
 const html=document.documentElement;
 if(localStorage.getItem('theme')==='light'){
@@ -194,9 +584,10 @@ if(localStorage.getItem('theme')==='light'){
   themeToggle.classList.add('active');
 }
 themeToggle.addEventListener('click',function(){
-  html.classList.toggle('light');  this.classList.toggle('active');
-  localStorage.setItem('theme',html.classList.contains('light')?'light':'dark');
-});
+  html.classList.toggle('light');
+  this.classList.toggle('active');
+  localStorage.setItem('theme',html.classList.contains('light')?'light':'dark');});
+
 document.querySelectorAll('a[href^="#"]').forEach(anchor=>{
   anchor.addEventListener('click',function(e){
     const href=this.getAttribute('href');
@@ -206,11 +597,13 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor=>{
     }
   });
 });
-document.querySelectorAll('.card').forEach(card=>{
-  card.addEventListener('click',function(){
-    openModal(this.getAttribute('data-client'));
-  });
+
+window.addEventListener('scroll',()=>{
+  const nav=document.getElementById('navbar');
+  if(window.scrollY>50)nav.classList.add('scrolled');
+  else nav.classList.remove('scrolled');
 });
+
 document.addEventListener('keydown',function(e){
   if(e.key==='Escape')closeModal();
 });
